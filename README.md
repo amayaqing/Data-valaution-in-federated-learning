@@ -1,9 +1,52 @@
-# Data-valaution-in-federated-learning
+# Data valuation for Machine Learning and Federated Learning
 
-**CityU final year thesis project** (Supervisor: Prof. Wang Cong)
+This project designs a real-time round data valuation (RDV) scheme based on Shapley value to serve as an incentive scheme for Federated learning. The corresponding estimations are proposed to improve efficiency. At the same time, the data valuation idea is extended to optimize the federated aggregation process.
+
+## Source code construction
+
+The source code is composed by three major parts:
+
+- **Main running part**:
+
+  - *main.py*: the main running program for data valuation (incentive calculation) part. The output records all round Shapley value assigned to each participant. 
+  - *FedOpt_dv.py*: the Positive-Only and Positive-Weighted strategies to optimize the model aggregation process (only include the baseline average aggregation method). The program performs the corresponding methods to obtain the global model and returns the accuracy value for each round.
+  - *FedOpt_ransac.py*: Similar as *FedOpt_dv*, this program utilized RANSAC-selective approach to perform federated aggregation and return the accuracy value for each round.
+
+- **Utility functions and parameter part**:
+
+  - *glob.py*: defines and sets all global parameters needed for running the main program, including the number of local clients, the number of local data and what data environment is created, etc. 
+  - *util.py* (in *Util/* folder): defines all necessary functions, like the `load_data`, `init_model`, etc. The implementation of all federated learning related operations, such as `local_train`, `federated_train`,  are borrowed from the official methods given by Google (https://www.tensorflow.org/federated). 
+  - *plot.py* (in *Util/* folder): plot the data valuation results and store the graphs in the corresponding folders (Image/...).
+
+- **Round-based data valuation implementation part**:
+
+  This part is located in *DV/* folder, including the implementation of RDV, K-subset DV, TMC-DV, clusterDV and the orignial DefDV.
 
 
 
-Recently, federated learning (FL) emerges as a promising framework to collect the dispersed data and train a collaborative machine learning (ML) model with privacy protection. An incentive scheme plays a crucial role in the FL system as they encourage long-term client joining. However, due to information asymmetry between the central server and local users, a key challenge is to evaluate participants’ contributions in an objective and efficient manner so as to allocate the payoff fairly. Data valuation in ML context is a systematic study on quantifying the usefulness of a specific data point in a prediction model. It provides a potential solution for FL to measure local client’s quality. However, exponential computational complexity and additional communication costs are critical challenges of applying data valuation-based incentive schemes.
+## Environment
 
-In this project, we propose a new round-based data valuation (RDV) approach to serve as a real-time incentive mechanism. It takes advantage of the FL system’s unique model aggregation property to increase the valuation efficiency and provide a fine-grained contribution estimation on a per-round basis. It also offers a guideline for the central server to selectively aggregate the local updates to train a better-performing model. We empirically demonstrate the effectiveness of RDV in identifying high-quality participants, the efficiency in allocating payoff, and its potentials in federation optimization.
+Python 3.7
+
+TensorFlow 2.3.1
+
+TensorFlow Federated 0.17.0
+
+```shell
+pip install --upgrade tensorflow_federated
+```
+
+
+
+## Running
+
+Change parameters in  *glob.py*, then 
+
+```shell
+python main.py           # for data valuation
+python FedOpt_dv.py      # using data valuation to optimize aggregation
+python FedOpt_ransac.py  # using RANSAC-selective to optimize aggregation
+```
+
+
+
