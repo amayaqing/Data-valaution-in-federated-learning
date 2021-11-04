@@ -5,7 +5,6 @@
 Supervisor: Prof. Wang Cong
 
 
-Abstract:
 
 Recently, federated learning (FL) emerges as a promising framework to collect the dispersed data and train a collaborative machine learning (ML) model with privacy protection. An incentive scheme plays a crucial role in the FL system as they encourage long-term client joining. However, due to information asymmetry between the central server and local users, a key challenge is to evaluate participants’ contributions in an objective and efficient manner so as to allocate the payoff fairly. Data valuation in ML context is a systematic study on quantifying the usefulness of a specific data point in a prediction model. It provides a potential solution for FL to measure local client’s quality. However, exponential computational complexity and additional communication costs are critical challenges of applying data valuation-based incentive schemes.
 
